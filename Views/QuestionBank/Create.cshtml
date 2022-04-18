@@ -12,34 +12,34 @@
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="FSujectId" />            
+            <input type="hidden" asp-for="FSujectId" />
             <div class="form-group">
                 <label asp-for="FCourseName" class="control-label"></label>
                 <select asp-for="FCourseId" class="form-control" asp-items="ViewBag.FCourseName"></select>
             </div>
             @*<div class="form-group">
-            <label asp-for="FCourseName" class="control-label"></label>
-            <input asp-for="FCourseName" class="form-control" />
-            <span asp-validation-for="FCourseName" class="text-danger"></span>
-        </div>*@
+                    <label asp-for="FCourseName" class="control-label"></label>
+                    <input asp-for="FCourseName" class="form-control" />
+                    <span asp-validation-for="FCourseName" class="text-danger"></span>
+                </div>*@
             <div class="form-group">
                 <label asp-for="FCategoryName" class="control-label"></label>
                 <select asp-for="FCategoryId" class="form-control" asp-items="ViewBag.FCategoryName"></select>
             </div>
             @*<div class="form-group">
-            <label asp-for="FCategoryName" class="control-label"></label>
-            <input asp-for="FCategoryName" class="form-control" />
-            <span asp-validation-for="FCategoryName" class="text-danger"></span>
-        </div>*@
+                    <label asp-for="FCategoryName" class="control-label"></label>
+                    <input asp-for="FCategoryName" class="form-control" />
+                    <span asp-validation-for="FCategoryName" class="text-danger"></span>
+                </div>*@
             <div class="form-group">
                 <label asp-for="FTypeName" class="control-label"></label>
                 <select asp-for="FTypeId" class="form-control" asp-items="ViewBag.FTypeName"></select>
             </div>
             @*<div class="form-group">
-            <label asp-for="FTypeName" class="control-label"></label>
-            <input asp-for="FTypeName" class="form-control" />
-            <span asp-validation-for="FTypeName" class="text-danger"></span>
-        </div>*@
+                    <label asp-for="FTypeName" class="control-label"></label>
+                    <input asp-for="FTypeName" class="form-control" />
+                    <span asp-validation-for="FTypeName" class="text-danger"></span>
+                </div>*@
             <div class="form-group">
                 <label asp-for="FQuestion" class="control-label"></label>
                 <input asp-for="FQuestion" class="form-control" />
@@ -88,4 +88,24 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+<script>
+    @*const selCourse = document.querySelector('#FCourseId');
+    const selCategory = document.querySelector('#FCategoryId');
+
+    selCourse.addEventListener('change', async function () {
+        const course = selCourse.options[selCourse.selectedIndex].value;
+        await Loadcategory(course);
+        const category = selCategory.options[selCategory.selectedIndex].value;
+        LoadRoad(category)
+    })
+
+
+
+    async function Loadcategory(course) {
+        const responseCategory = await fetch("@Url.Content("~/api/category")" + `?city=${course}`);
+        renderCategory(await responseCategory.json());
+    }*@
+
+</script>
+    
 }

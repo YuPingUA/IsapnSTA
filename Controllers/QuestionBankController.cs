@@ -37,13 +37,47 @@ namespace ISpanSTA.Controllers
         // GET: QuestionBankController/Details/5
         public ActionResult Details(int? id)
         {
-            TSuject sj = _context.TSujects.FirstOrDefault(sj => sj.FSujectId == (int)id);
-            
-            if (sj != null)
-            {
-                return View(sj);
-            }
+            //if (id != null)
+            //{
+            //    TSuject sj = _context.TSujects.FirstOrDefault(sj => sj.FSujectId == (int)id);
+            //    if (sj != null)
+            //    {
+            //        return View(new CExamViewModel() { subject = sj });
+            //    }
+            //}
+            //return RedirectToAction("Index");
 
+
+            if (id != null)
+            {
+                var data = from s in _context.TSujects
+                           join c in _context.TCategories on s.FCategoryId equals c.FCategoryId
+                           join co in _context.TClassCourseFullInfos on s.FCourseId equals co.FCourseId
+                           join t in _context.TTypes on s.FTypeId equals t.FTypeId
+                           where s.FSujectId == (int)id
+                           select new CExamViewModel
+                           {
+                               FSujectId = s.FSujectId,
+                               FCourseId = s.FCourseId,
+                               FCategoryId = s.FCategoryId,
+                               FTypeId = s.FTypeId,
+                               FQuestion = s.FQuestion,
+                               FCourseName = co.FCourse,
+                               FCategoryName = c.FName,
+                               FTypeName = t.FType,
+                               FOption1 = s.FOption1,
+                               FOption2 = s.FOption2,
+                               FOption3 = s.FOption3,
+                               FOption4 = s.FOption4,
+                               FAns = s.FAns,
+                               FAnsAnalyze = s.FAnsAnalyze
+                           };
+
+                //return View(data);
+                //return View(data.ToList());
+                return View(data.ToList()[0]);
+
+            }
             return RedirectToAction("Index");
 
         }
@@ -157,6 +191,29 @@ namespace ISpanSTA.Controllers
         //    {
         //        return View();
         //    }
+        //}
+
+
+        ////讀出不重複的城市名稱
+        //public IActionResult courseL()
+        //{
+        //    var courseLs = _context.TClassCourseFullInfos.Select(a => new
+        //    {
+        //        a.FCourse
+        //    }).Distinct().OrderBy(a => a.FCourse);
+
+        //    return Json(courseLs);
+
+        //}
+
+        ////根據城市名稱讀出鄉鎮區
+        //public IActionResult category(string course)
+        //{
+        //    var categorys = _context.TCategories.Where(a => a.FCourse == course).Select(a => new
+        //    {
+        //        a.SiteId
+        //    }).Distinct().OrderBy(a => a.SiteId);
+        //    return Json(categorys);
         //}
     }
 }
