@@ -1,0 +1,95 @@
+﻿@model IEnumerable<ISpanSTA.ViewModel.CExamPaperViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            @*<th>
+                @Html.DisplayNameFor(model => model.FExamPaperId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FClassPeriod)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FCourseId)
+            </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model.FCourseName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FName)
+            </th>
+            @*<th>
+                @Html.DisplayNameFor(model => model.FDescription)
+            </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model.FBegin)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FEnd)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FTimeLimit)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FReveal)
+            </th>
+            @*<th>
+                @Html.DisplayNameFor(model => model.FOrder)
+            </th>*@
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            @*<td>
+                @Html.DisplayFor(modelItem => item.FExamPaperId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FClassPeriod)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FCourseId)
+            </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.FCourseName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FName)
+            </td>
+            @*<td>
+                @Html.DisplayFor(modelItem => item.FDescription)
+            </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.FBegin)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FEnd)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FTimeLimit)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FReveal)
+            </td>
+            @*<td>
+                @Html.DisplayFor(modelItem => item.FOrder)
+            </td>*@
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

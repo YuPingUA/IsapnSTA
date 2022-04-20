@@ -50,7 +50,7 @@ namespace ISpanSTA.Controllers
 
             if (id != null)
             {
-                var data = from s in _context.TSujects
+                var data = (from s in _context.TSujects
                            join c in _context.TCategories on s.FCategoryId equals c.FCategoryId
                            join co in _context.TClassCourseFullInfos on s.FCourseId equals co.FCourseId
                            join t in _context.TTypes on s.FTypeId equals t.FTypeId
@@ -71,11 +71,12 @@ namespace ISpanSTA.Controllers
                                FOption4 = s.FOption4,
                                FAns = s.FAns,
                                FAnsAnalyze = s.FAnsAnalyze
-                           };
+                           }).FirstOrDefault();
 
                 //return View(data);
                 //return View(data.ToList());
-                return View(data.ToList()[0]);
+                //return View(data.ToList()[0]);
+                return View(data);
 
             }
             return RedirectToAction("Index");
@@ -194,26 +195,29 @@ namespace ISpanSTA.Controllers
         //}
 
 
-        ////讀出不重複的城市名稱
-        //public IActionResult courseL()
-        //{
-        //    var courseLs = _context.TClassCourseFullInfos.Select(a => new
-        //    {
-        //        a.FCourse
-        //    }).Distinct().OrderBy(a => a.FCourse);
+        ////讀出不重複的課程名稱
+        public IActionResult courseFilter()
+        {
+            var courses = _context.TClassCourseFullInfos.Select(co => new
+            {
+                co.FCourse,
+                co.FCourseId
+            }).Distinct().OrderBy(co => co.FCourseId);
 
-        //    return Json(courseLs);
+            return Json(courses);
 
-        //}
+        }
 
-        ////根據城市名稱讀出鄉鎮區
-        //public IActionResult category(string course)
-        //{
-        //    var categorys = _context.TCategories.Where(a => a.FCourse == course).Select(a => new
-        //    {
-        //        a.SiteId
-        //    }).Distinct().OrderBy(a => a.SiteId);
-        //    return Json(categorys);
-        //}
+        ////根據課程名稱讀出對應類別
+        public IActionResult categoryFilter(int courseId)
+        {
+            var categorys = _context.TCategories.
+                            Where(ca=>ca.FCourseId == courseId).Select(ca => new
+                            {                                
+                                ca.FName
+                            }).Distinct();
+            return Json(categorys);
+        //
     }
+}
 }

@@ -15,7 +15,7 @@
             <input type="hidden" asp-for="FSujectId" />
             <div class="form-group">
                 <label asp-for="FCourseName" class="control-label"></label>
-                <select asp-for="FCourseId" class="form-control" asp-items="ViewBag.FCourseName"></select>
+                <select asp-for="FCourseId" class="form-control"></select>@*asp-items="ViewBag.FCourseName"*@
             </div>
             @*<div class="form-group">
                     <label asp-for="FCourseName" class="control-label"></label>
@@ -24,7 +24,7 @@
                 </div>*@
             <div class="form-group">
                 <label asp-for="FCategoryName" class="control-label"></label>
-                <select asp-for="FCategoryId" class="form-control" asp-items="ViewBag.FCategoryName"></select>
+                <select asp-for="FCategoryId" class="form-control"></select>
             </div>
             @*<div class="form-group">
                     <label asp-for="FCategoryName" class="control-label"></label>
@@ -87,25 +87,53 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-<script>
-    @*const selCourse = document.querySelector('#FCourseId');
+
+    <script>
+    const selCourse = document.querySelector('#FCourseId');
     const selCategory = document.querySelector('#FCategoryId');
 
     selCourse.addEventListener('change', async function () {
         const course = selCourse.options[selCourse.selectedIndex].value;
-        await Loadcategory(course);
-        const category = selCategory.options[selCategory.selectedIndex].value;
-        LoadRoad(category)
+        await LoadCategory(course);        
     })
 
 
 
-    async function Loadcategory(course) {
-        const responseCategory = await fetch("@Url.Content("~/api/category")" + `?city=${course}`);
-        renderCategory(await responseCategory.json());
-    }*@
+    async function LoadCourseCategory() {
+        //載入課程
+        const responseCourse = await fetch('@Url.Content("~/QuestionBank/courseFilter")');
+        renderCourse(await responseCourse.json());
 
-</script>
+        //根據課程名稱載入類別
+        const course = selCourse.options[selCourse.selectedIndex].value;
+        await LoadCategory(course);
+
+    }
+
+        LoadCourseCategory();
+
+    async function LoadCategory(courseId) {
+        const responseCategory = await fetch("@Url.Content("~/QuestionBank/categoryFilter")" + `?courseId=${courseId}`);
+        renderCategory(await responseCategory.json());
+    }
+
+        function renderCourse(datas) {
+            selCourse.options.length = 0;
+            datas.forEach((item) => {
+                const opt = new Option(item.fCourse, item.fCourseId);
+                selCourse.options.add(opt);
+            })
+        }
+
+    function renderCategory(datas) {
+        selCategory.options.length = 0;
+        datas.forEach((item) => {
+            const opt = new Option(item.fName, item.fName);
+            selCategory.options.add(opt);
+        })
+    }
+    </script>
     
+    
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
