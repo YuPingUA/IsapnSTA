@@ -13,21 +13,23 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>            
                 <input type="hidden" asp-for="FExamPaperId" class="form-control" />                
+                <div class="form-group">
+                    <label asp-for="FClassPeriod" class="control-label"></label>
+                    @*<input asp-for="FClassPeriod" class="form-control" />*@
+                    <select asp-for="FClassPeriod" class="form-control" asp-items="ViewBag.FClassPeriod"></select>
+                    <span asp-validation-for="FClassPeriod" class="text-danger"></span>
+                </div>
             <div class="form-group">
-                <label asp-for="FClassPeriod" class="control-label"></label>
-                <input asp-for="FClassPeriod" class="form-control" />
-                <span asp-validation-for="FClassPeriod" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FCourseId" class="control-label"></label>
-                <input asp-for="FCourseId" class="form-control" />
+                <label asp-for="FCourseName" class="control-label"></label>
+                @*<input asp-for="FCourseId" class="form-control" />*@
+                <select asp-for="FCourseId" class="form-control" asp-items="ViewBag.FCourseName"></select>
                 <span asp-validation-for="FCourseId" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            @*<div class="form-group">
                 <label asp-for="FCourseName" class="control-label"></label>
                 <input asp-for="FCourseName" class="form-control" />
                 <span asp-validation-for="FCourseName" class="text-danger"></span>
-            </div>
+            </div>*@
             <div class="form-group">
                 <label asp-for="FName" class="control-label"></label>
                 <input asp-for="FName" class="form-control" />

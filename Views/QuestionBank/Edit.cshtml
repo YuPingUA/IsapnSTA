@@ -87,5 +87,51 @@
 </div>
 
 @section Scripts {
+
+    <script>
+    const selCourse = document.querySelector('#FCourseId');
+    const selCategory = document.querySelector('#FCategoryId');
+
+    selCourse.addEventListener('change', async function () {
+        const course = selCourse.options[selCourse.selectedIndex].value;
+        await LoadCategory(course);
+    })
+
+
+
+    async function LoadCourseCategory() {
+        //載入課程
+        const responseCourse = await fetch('@Url.Content("~/QuestionBank/courseFilter")');
+        renderCourse(await responseCourse.json());
+
+        //根據課程名稱載入類別
+        const course = selCourse.options[selCourse.selectedIndex].value;
+        await LoadCategory(course);
+
+    }
+
+        LoadCourseCategory();
+
+    async function LoadCategory(courseId) {
+        const responseCategory = await fetch("@Url.Content("~/QuestionBank/categoryFilter")" + `?courseId=${courseId}`);
+        renderCategory(await responseCategory.json());
+    }
+
+        function renderCourse(datas) {
+            selCourse.options.length = 0;
+            datas.forEach((item) => {
+                const opt = new Option(item.fCourse, item.fCourseId);
+                selCourse.options.add(opt);
+            })
+        }
+
+    function renderCategory(datas) {
+        selCategory.options.length = 0;
+        datas.forEach((item) => {
+            const opt = new Option(item.fName, item.fCategoryId);
+            selCategory.options.add(opt);
+        })
+    }
+    </script>
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

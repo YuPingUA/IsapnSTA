@@ -1,0 +1,152 @@
+﻿@model IEnumerable<ISpanSTA.ViewModel.CExampDetailsViewModel>
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+
+
+
+
+<div>
+    <h4>CExamViewModel</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.FClassPeriod)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => @Model.ToList()[0].FClassPeriod)            
+        </dd>        
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.FCourseId)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => @Model.ToList()[0].FCourseId)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.FCourseName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => @Model.ToList()[0].FCourseName)
+        </dd>
+        @*<dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.FCategoryId)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => @Model.ToList()[0].FCategoryId)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.FCategoryName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => @Model.ToList()[0].FCategoryName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.FTypeId)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => @Model.ToList()[0].FTypeId)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.FTypeName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FTypeName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.FQuestion)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FQuestion)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.FOption1)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FOption1)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.FOption2)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FOption2)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.FOption3)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FOption3)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.FOption4)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FOption4)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.FAns)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FAns)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.FAnsAnalyze)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FAnsAnalyze)
+        </dd>*@
+    </dl>
+</div>
+
+
+
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FEpDetailId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FExamPaperId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FExamPaperName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FSujectId)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FEpDetailId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FExamPaperId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FExamPaperName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FSujectId)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

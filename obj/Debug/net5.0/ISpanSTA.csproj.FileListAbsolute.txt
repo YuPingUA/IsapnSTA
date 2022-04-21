@@ -310,3 +310,4 @@ E:\專題製作第二組\IsapnSTA core-20220413T062834Z-001\IsapnSTA core\ISpanS
 E:\專題製作第二組\IsapnSTA core-20220413T062834Z-001\IsapnSTA core\ISpanSTA\obj\Debug\net5.0\Razor\Views\QuestionBank\Details.cshtml.g.cs
 E:\專題製作第二組\IsapnSTA core-20220413T062834Z-001\IsapnSTA core\ISpanSTA\obj\Debug\net5.0\Razor\Views\TExamPaper\Index.cshtml.g.cs
 E:\專題製作第二組\IsapnSTA core-20220413T062834Z-001\IsapnSTA core\ISpanSTA\obj\Debug\net5.0\Razor\Views\TExamPaper\Create.cshtml.g.cs
+E:\專題製作第二組\IsapnSTA core-20220413T062834Z-001\IsapnSTA core\ISpanSTA\obj\Debug\net5.0\Razor\Views\TExamPaper\Details.cshtml.g.cs

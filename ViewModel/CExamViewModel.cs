@@ -72,6 +72,8 @@ namespace ISpanSTA.ViewModel
             set { this.subject.FCategoryId = value; }
         }
 
+       
+
         [DisplayName("題目類別")]
         public string FCategoryName
         {

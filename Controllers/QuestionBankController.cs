@@ -86,8 +86,8 @@ namespace ISpanSTA.Controllers
         // GET: QuestionBankController/Create
         public IActionResult Create()
         {
-            ViewData["FCourseName"] = new SelectList(_context.TClassCourseFullInfos, "FCourseId", "FCourse");
-            ViewData["FCategoryName"] = new SelectList(_context.TCategories, "FCategoryId", "FName");
+            //ViewData["FCourseName"] = new SelectList(_context.TClassCourseFullInfos, "FCourseId", "FCourse");
+            //ViewData["FCategoryName"] = new SelectList(_context.TCategories, "FCategoryId", "FName");
             ViewData["FTypeName"] = new SelectList(_context.TTypes, "FTypeId", "FType");
             return View();
         }
@@ -99,24 +99,36 @@ namespace ISpanSTA.Controllers
         {
             try
             {
-                _context.TSujects.Add(sj.subject);
-                _context.SaveChanges();                
-                return RedirectToAction(nameof(Index));
-            }
+                TSuject ts = new TSuject();
+            ts.FCourseId = sj.FCourseId;
+            ts.FCategoryId = sj.FCategoryId;
+            ts.FTypeId = sj.FTypeId;
+            ts.FQuestion = sj.FQuestion;
+            ts.FOption1 = sj.FOption1;
+            ts.FOption2 = sj.FOption2;
+            ts.FOption3 = sj.FOption3;
+            ts.FOption4 = sj.FOption4;
+            ts.FAns = sj.FAns;
+            ts.FAnsAnalyze = sj.FAnsAnalyze;
+
+            _context.TSujects.Add(ts);
+            _context.SaveChanges();
+            return RedirectToAction(nameof(Index));
+        }
             catch
             {
-                ViewData["FCourseName"] = new SelectList(_context.TCategories, "FCourseId", "FCourse", sj.FCourseId);
-                ViewData["FCategoryName"] = new SelectList(_context.TCategories, "FCategoryId", "FName", sj.FCategoryId);
+                //ViewData["FCourseName"] = new SelectList(_context.TCategories, "FCourseId", "FCourse", sj.FCourseId);
+                //ViewData["FCategoryName"] = new SelectList(_context.TCategories, "FCategoryId", "FName", sj.FCategoryId);
                 ViewData["FTypeName"] = new SelectList(_context.TTypes, "FTypeId", "FType", sj.FTypeId);
                 return View(sj);
-            }
-        }
+    }
+}
 
         // GET: QuestionBankController/Edit/5
         public IActionResult Edit(int? id)
         {
-            ViewData["FCourseName"] = new SelectList(_context.TClassCourseFullInfos, "FCourseId", "FCourse");
-            ViewData["FCategoryName"] = new SelectList(_context.TCategories, "FCategoryId", "FName");
+            //ViewData["FCourseName"] = new SelectList(_context.TClassCourseFullInfos, "FCourseId", "FCourse");
+            //ViewData["FCategoryName"] = new SelectList(_context.TCategories, "FCategoryId", "FName");
             ViewData["FTypeName"] = new SelectList(_context.TTypes, "FTypeId", "FType");
             if (id != null)
             {
@@ -134,8 +146,8 @@ namespace ISpanSTA.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Edit(CExamViewModel sj)
         {
-            //try
-            //{
+            try
+            {
                 TSuject s = _context.TSujects.FirstOrDefault(s => s.FSujectId == sj.FSujectId);
                 if (s != null)
                 {
@@ -154,14 +166,14 @@ namespace ISpanSTA.Controllers
                 }
 
                 return RedirectToAction("Index");
-            //}
-            //catch
-            //{
-            //    //ViewData["FCourseName"] = new SelectList(_context.TCategories, "FCourseId", "FCourse", sj.FCourseId);
-            //    //ViewData["FCategoryName"] = new SelectList(_context.TCategories, "FCategoryId", "FName", sj.FCategoryId);
-            //    //ViewData["FTypeName"] = new SelectList(_context.TTypes, "FTypeId", "FType", sj.FTypeId);
-            //    return RedirectToAction("Index");
-            //}
+            }
+            catch
+            {
+                //ViewData["FCourseName"] = new SelectList(_context.TCategories, "FCourseId", "FCourse", sj.FCourseId);
+                //ViewData["FCategoryName"] = new SelectList(_context.TCategories, "FCategoryId", "FName", sj.FCategoryId);
+                ViewData["FTypeName"] = new SelectList(_context.TTypes, "FTypeId", "FType", sj.FTypeId);
+                return RedirectToAction("Index");
+            }
         }
 
         // GET: QuestionBankController/Delete/5
@@ -214,6 +226,7 @@ namespace ISpanSTA.Controllers
             var categorys = _context.TCategories.
                             Where(ca=>ca.FCourseId == courseId).Select(ca => new
                             {                                
+                                ca.FCategoryId,
                                 ca.FName
                             }).Distinct();
             return Json(categorys);

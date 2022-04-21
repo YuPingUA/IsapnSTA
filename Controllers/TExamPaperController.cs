@@ -45,15 +45,44 @@ namespace ISpanSTA.ViewModel
         }
 
         // GET: CExamPaperController/Details/5
-        public ActionResult Details(int id)
+        public IActionResult Details(int? id)
         {
-            return View();
+            if (id != null)
+            {
+                var data = from epd in _context.TExamPaperDetails
+                           join ep in _context.TExaminationPapers on epd.FExamPaperId equals ep.FExamPaperId
+                           join co in _context.TClassCourseFullInfos on ep.FCourseId equals co.FCourseId
+                           where epd.FExamPaperId == (int)id
+                           orderby epd.FSujectId ascending //將對應的試卷題目照題目ID由小到大排序
+                           select new CExampDetailsViewModel
+                           {
+                               FExamPaperId = epd.FExamPaperId,
+                               FSujectId = epd.FSujectId,
+                               FEpDetailId = epd.FEpDetailId,
+                               FExamPaperName = ep.FName,
+
+                               FClassPeriod = ep.FClassPeriod,
+                               FCourseId = ep.FCourseId,
+                               FCourseName = co.FCourse
+
+                              
+
+                               //epd.FSujectId
+                           };
+
+                List<CExampDetailsViewModel> list = new List<CExampDetailsViewModel>();
+                foreach (var t in data)
+                    list.Add(t);
+                return View(list);
+            }
+            return RedirectToAction("Index");
         }
 
         // GET: CExamPaperController/Create
         public ActionResult Create()
         {
-            //ViewData["FCourseName"] = new SelectList(_context.TClassCourseFullInfos, "FCourseId", "FCourse");
+            ViewData["FClassPeriod"] = new SelectList(_context.TClassFullInfos, "FClassPeriod", "FClassPeriod");
+            ViewData["FCourseName"] = new SelectList(_context.TClassCourseFullInfos, "FCourseId", "FCourse");
             
             return View();
         }
@@ -71,7 +100,8 @@ namespace ISpanSTA.ViewModel
             }
             catch
             {
-                //ViewData["FCourseName"] = new SelectList(_context.TCategories, "FCourseId", "FCourse", sj.FCourseId);
+                ViewData["FClassPeriod"] = new SelectList(_context.TClassFullInfos, "FClassPeriod", "FClassPeriod", ep.FClassPeriod);
+                ViewData["FCourseName"] = new SelectList(_context.TClassCourseFullInfos, "FCourseId", "FCourse", ep.FCourseId);
                 
                 return View(ep);               
             }

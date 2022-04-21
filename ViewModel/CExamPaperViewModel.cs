@@ -12,12 +12,14 @@ namespace ISpanSTA.ViewModel
         private TExaminationPaper _examp = null;
         private TClassFullInfo _classfi = null;
         private TClassCourseFullInfo _course = null;
+        
 
         public CExamPaperViewModel()
         {
             _examp = new TExaminationPaper();
             _classfi = new TClassFullInfo();
             _course = new TClassCourseFullInfo();
+            //_exampd = new TExamPaperDetail();
         }
 
         public TExaminationPaper examp
@@ -37,6 +39,11 @@ namespace ISpanSTA.ViewModel
             get { return _course; }
             set { _course = value; }
         }
+        //public TExamPaperDetail exampd
+        //{
+        //    get { return _exampd; }
+        //    set { _exampd = value; }
+        //}
 
 
 
@@ -115,6 +122,11 @@ namespace ISpanSTA.ViewModel
             set { this.examp.FOrder = value; }
         }
 
+        //public int FCourseId
+        //{
+        //    get { return this.examp.FCourseId; }
+        //    set { this.examp.FCourseId = value; }
+        //}
 
 
     }

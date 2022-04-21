@@ -128,7 +128,7 @@
     function renderCategory(datas) {
         selCategory.options.length = 0;
         datas.forEach((item) => {
-            const opt = new Option(item.fName, item.fName);
+            const opt = new Option(item.fName, item.fCategoryId);
             selCategory.options.add(opt);
         })
     }
