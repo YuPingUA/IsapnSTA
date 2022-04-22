@@ -122,7 +122,11 @@
             datas.forEach((item) => {
                 const opt = new Option(item.fCourse, item.fCourseId);
                 selCourse.options.add(opt);
+
             })
+
+            selCourse.selectedIndex = @ViewBag.coIdIndex;
+
         }
 
     function renderCategory(datas) {
@@ -131,6 +135,8 @@
             const opt = new Option(item.fName, item.fCategoryId);
             selCategory.options.add(opt);
         })
+
+        selCategory.selectedIndex = @ViewBag.caIdIndex;
     }
     </script>
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

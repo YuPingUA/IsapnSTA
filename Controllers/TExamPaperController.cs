@@ -81,8 +81,8 @@ namespace ISpanSTA.ViewModel
         // GET: CExamPaperController/Create
         public ActionResult Create()
         {
-            ViewData["FClassPeriod"] = new SelectList(_context.TClassFullInfos, "FClassPeriod", "FClassPeriod");
-            ViewData["FCourseName"] = new SelectList(_context.TClassCourseFullInfos, "FCourseId", "FCourse");
+            //ViewData["FClassPeriod"] = new SelectList(_context.TClassFullInfos, "FClassPeriod", "FClassPeriod");
+            //ViewData["FCourseName"] = new SelectList(_context.TClassCourseFullInfos, "FCourseId", "FCourse");
             
             return View();
         }
@@ -90,18 +90,37 @@ namespace ISpanSTA.ViewModel
         // POST: CExamPaperController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(CExamPaperViewModel ep)
+        public ActionResult Create(CExampDetailsViewModel ep)
         {
             try
             {
-                _context.TExaminationPapers.Add(ep.examp);
+                TExaminationPaper ts = new TExaminationPaper();
+                ts.FExamPaperId = ep.FExamPaperId;
+                ts.FClassPeriod = ep.FClassPeriod;
+                ts.FCourseId = ep.FCourseId;
+                ts.FName = ep.FExamPaperName;
+                ts.FBegin = ep.FBegin;
+                ts.FEnd = ep.FEnd;
+                ts.FReveal = ep.FReveal;
+                ts.FTimeLimit = ep.FTimeLimit;
+                ts.FOrder = ep.FOrder;
+                ts.FDescription = ep.FDescription;
+
+                _context.TExaminationPapers.Add(ts);
                 _context.SaveChanges();
+
+
+
+
+
+
+
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                ViewData["FClassPeriod"] = new SelectList(_context.TClassFullInfos, "FClassPeriod", "FClassPeriod", ep.FClassPeriod);
-                ViewData["FCourseName"] = new SelectList(_context.TClassCourseFullInfos, "FCourseId", "FCourse", ep.FCourseId);
+                //ViewData["FClassPeriod"] = new SelectList(_context.TClassFullInfos, "FClassPeriod", "FClassPeriod", ep.FClassPeriod);
+                //ViewData["FCourseName"] = new SelectList(_context.TClassCourseFullInfos, "FCourseId", "FCourse", ep.FCourseId);
                 
                 return View(ep);               
             }
@@ -129,24 +148,79 @@ namespace ISpanSTA.ViewModel
         }
 
         // GET: CExamPaperController/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Delete(int? id)
         {
-            return View();
+            if (id != null)
+            {
+                TExaminationPaper ep = _context.TExaminationPapers.FirstOrDefault(ep => ep.FExamPaperId == (int)id);
+
+                var details = from d in _context.TExamPaperDetails
+                              where d.FExamPaperId == (int)id
+                              select d;
+
+                List<TExamPaperDetail> detailsList = details.ToList();
+
+                foreach (TExamPaperDetail epd in detailsList)
+                {
+                    _context.TExamPaperDetails.Remove(epd);  //將明細移除
+                    _context.SaveChanges();
+                }
+                _context.TExaminationPapers.Remove(ep);  //將試卷移除
+                _context.SaveChanges();
+            }
+            return RedirectToAction("Index");
         }
 
+
         // POST: CExamPaperController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Delete(int id, IFormCollection collection)
+        //{
+        //    try
+        //    {
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    catch
+        //    {
+        //        return View();
+        //    }
+        //}
+
+
+        ////讀出不重複的班級名稱
+        public IActionResult classFilter()
         {
-            try
+            var classes = _context.TClassFullInfos.Select(cl => new
             {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+                cl.FClassPeriod,
+                cl.FClass
+            });
+            /*.Distinct().OrderBy(cl => cl.FClassPeriod);*/
+
+            return Json(classes);
+
         }
+
+        ////根據班種讀出對應課程
+        public IActionResult courseFilter(string classPeriod)
+        {
+            var classfi = _context.TClassFullInfos.FirstOrDefault(cl => cl.FClassPeriod == classPeriod);
+            string classType = classfi.FClass;
+            var courses = _context.TClassCourseFullInfos.
+                            Where(co => co.FClass == classType).Select(co => new
+                            {
+                                co.FCourse,
+                                co.FCourseId
+                            }).Distinct();
+
+            //var course = from s in _context.TClassCourseFullInfos
+            //             join ss in _context.TClassFullInfos on s.FClass equals ss.FClass
+            //             where s.FClass == classfi
+            //             select new { s.FCourse, s.FCourseId };
+            return Json(courses);
+            //
+        }
+
     }
 }

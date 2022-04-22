@@ -70,7 +70,7 @@
                 <div class="eva-menu-grpbox">
                     <div class="eva-menu-grp">
                         <div class="eva-menu-grptxt">
-                            題庫管理
+                            <a href="~/QuestionBank/Index">題庫管理</a>
                         </div>
                     </div>
                 </div>
@@ -87,14 +87,14 @@
                 <div class="eva-menu-grpbox">
                     <div class="eva-menu-grp">
                         <div class="eva-menu-grptxt">
-                        <a href="~/TExamation/Index" >試卷管理</a>
+                        <a href="~/TExamPaper/Index" >試卷管理</a>
                     </div>
                     </div>
                 </div>
                 <div class="eva-menu-grpbox">
                     <div class="eva-menu-grp">
                         <div class="eva-menu-grptxt">
-                            測驗結果分析
+                            <a href="~/TExamPaper/Index">測驗結果分析</a>
                         </div>
                     </div>
                 </div>
@@ -275,7 +275,7 @@
                                         </td>*@
                                 <td>
                                     <i class="fas fa-eye">@Html.ActionLink("查看", "Details", new { id = item.FSujectId }) |</i>
-                                    <i class="fas fa-edit">@Html.ActionLink("編輯", "Edit", new { id = item.FSujectId }) |</i>
+                                    <i class="fas fa-edit">@Html.ActionLink("編輯", "Edit", new { id = item.FSujectId,coId=item.FCourseId,caId=item.FCategoryId }) |</i>
                                     <i class="fas fa-trash-alt">@Html.ActionLink("刪除", "Delete", "QuestionBank", new { id = item.FSujectId }, new { onclick = "return confirm('確定要刪除嗎?')"})</i>
                                 </td>
                                 </tr>

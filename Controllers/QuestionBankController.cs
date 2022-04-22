@@ -125,13 +125,38 @@ namespace ISpanSTA.Controllers
 }
 
         // GET: QuestionBankController/Edit/5
-        public IActionResult Edit(int? id)
+        public IActionResult Edit(int? id,int? coId,int? caId)
         {
             //ViewData["FCourseName"] = new SelectList(_context.TClassCourseFullInfos, "FCourseId", "FCourse");
             //ViewData["FCategoryName"] = new SelectList(_context.TCategories, "FCategoryId", "FName");
             ViewData["FTypeName"] = new SelectList(_context.TTypes, "FTypeId", "FType");
+
             if (id != null)
-            {
+            {                
+                List<TClassCourseFullInfo> courseList = new List<TClassCourseFullInfo>();
+                var course = (from co in _context.TClassCourseFullInfos
+                                select co).ToList(); 
+                               
+                foreach(var co in course)
+                {
+                    courseList.Add(co);
+                }
+                //找出該筆資料的課程Index對應到下拉式選單的位置
+                ViewBag.coIdIndex = courseList.FindIndex(co=>co.FCourseId==coId);
+
+                List<TCategory> categoryList = new List<TCategory>();
+                var category = (from ca in _context.TCategories
+                                where ca.FCourseId == coId
+                                select ca).ToList();
+
+                foreach (var ca in category)
+                {
+                    categoryList.Add(ca);
+                }
+                //找出該筆資料的課程類別Index對應到下拉式選單的位置
+                ViewBag.caIdIndex = categoryList.FindIndex(ca => ca.FCategoryId == caId);
+
+
                 TSuject sj = _context.TSujects.FirstOrDefault(sj => sj.FSujectId == (int)id);
                 if (sj != null)
                 {

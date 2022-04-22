@@ -73,20 +73,6 @@ namespace ISpanSTA.ViewModel
             set { this.exampd.FExamPaperId = value; }
         }
 
-        [DisplayName("試卷標題")]
-        public string FExamPaperName
-        {
-            get { return this.examp.FName; }
-            set { this.examp.FName = value; }
-        }
-
-
-        public int FSujectId
-        {
-            get { return this.exampd.FSujectId; }
-            set { this.exampd.FSujectId = value; }
-        }
-
         [DisplayName("班級")]
         public string FClassPeriod
         {
@@ -105,6 +91,61 @@ namespace ISpanSTA.ViewModel
         {
             get { return this.course.FCourse; }
             set { this.course.FCourse = value; }
+        }
+
+        [DisplayName("試卷標題")]
+        public string FExamPaperName
+        {
+            get { return this.examp.FName; }
+            set { this.examp.FName = value; }
+        }
+
+        [DisplayName("試卷描述")]
+        public string FDescription
+        {
+            get { return this.examp.FDescription; }
+            set { this.examp.FDescription = value; }
+        }
+
+        [DisplayName("開始時間")]
+        public DateTime? FBegin
+        {
+            get { return this.examp.FBegin; }
+            set { this.examp.FBegin = value; }
+        }
+
+        [DisplayName("結束時間")]
+        public DateTime? FEnd
+        {
+            get { return this.examp.FEnd; }
+            set { this.examp.FEnd = value; }
+        }
+
+        [DisplayName("時間限制")]
+        public int? FTimeLimit
+        {
+            get { return this.examp.FTimeLimit; }
+            set { this.examp.FTimeLimit = value; }
+        }
+
+        [DisplayName("公布解答")]
+        public DateTime? FReveal
+        {
+            get { return this.examp.FReveal; }
+            set { this.examp.FReveal = value; }
+        }
+
+        [DisplayName("排序")]
+        public int? FOrder
+        {
+            get { return this.examp.FOrder; }
+            set { this.examp.FOrder = value; }
+        }
+
+        public int FSujectId
+        {
+            get { return this.exampd.FSujectId; }
+            set { this.exampd.FSujectId = value; }
         }
 
     }
