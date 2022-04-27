@@ -1,11 +1,13 @@
-﻿@model IEnumerable<ISpanSTA.ViewModel.CExamViewModel>
+﻿@*@model IEnumerable<ISpanSTA.ViewModel.CExamViewModel>*@
+@model X.PagedList.IPagedList<ISpanSTA.ViewModel.CExamViewModel>
+@using X.PagedList.Mvc.Core;
 
 @{
     ViewData["Title"] = "Index";
 }
 
 @section Header{
-    
+
     <!-- Main Navigation -->
     <nav class="main_nav_container,align-items-center">
         <div class="main_nav">
@@ -56,6 +58,9 @@
     <link rel="stylesheet" href="~/calendar-15/css/rome.css">
     <link rel="stylesheet" href="~/calendar-15/css/bootstrap.min.css">
     <link rel="stylesheet" href="~/calendar-15/css/style.css">
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
 </head>
 
 
@@ -66,7 +71,7 @@
 <body>
     <div class="eva-container">
         <div class="eva-menu">
-            <div class="eva-menu-box">                
+            <div class="eva-menu-box">
                 <div class="eva-menu-grpbox">
                     <div class="eva-menu-grp">
                         <div class="eva-menu-grptxt">
@@ -87,8 +92,8 @@
                 <div class="eva-menu-grpbox">
                     <div class="eva-menu-grp">
                         <div class="eva-menu-grptxt">
-                        <a href="~/TExamPaper/Index" >試卷管理</a>
-                    </div>
+                            <a href="~/TExamPaper/Index">試卷管理</a>
+                        </div>
                     </div>
                 </div>
                 <div class="eva-menu-grpbox">
@@ -160,11 +165,11 @@
             <div class="HeaderList">
                 <div class="showList">
                     <div class="showListAll">
-                        <span class="showListAll-t1">顯示</span>
+                        <span class="showListAll-t1">每頁顯示</span>
                         <div class="listNumCon">
                             <select class="form-select">
-                                <option>25</option>
-                                <option>50</option>
+                                <option>5</option>
+                                <option>10</option>
                             </select>
                         </div>
                         <span class="showListAll-t2">筆資料</span>
@@ -183,22 +188,22 @@
                                     @Html.DisplayNameFor(model => model.FCourseId)
                                 </th>*@
                             <th>
-                                @Html.DisplayNameFor(model => model.FCourseName)
+                                @Html.DisplayNameFor(model => model.FirstOrDefault().FCourseName)
                             </th>
                             @*<th>
                                     @Html.DisplayNameFor(model => model.FCategoryId)
                                 </th>*@
                             <th>
-                                @Html.DisplayNameFor(model => model.FCategoryName)
+                                @Html.DisplayNameFor(model => model.FirstOrDefault().FCategoryName)
                             </th>
                             @*<th>
                                     @Html.DisplayNameFor(model => model.FTypeId)
                                 </th>*@
                             <th>
-                                @Html.DisplayNameFor(model => model.FTypeName)
+                                @Html.DisplayNameFor(model => model.FirstOrDefault().FTypeName)
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.FQuestion)
+                                @Html.DisplayNameFor(model => model.FirstOrDefault().FQuestion)
                             </th>
                             @*<th>
                                     @Html.DisplayNameFor(model => model.FOption1)
@@ -223,7 +228,15 @@
                     </thead>
                     <tbody>
                         @{
-                            int count = 0;
+                            int count;
+                            if (@Model.PageNumber == 1)
+                            {
+                                count = 0;
+                            }
+                            else
+                            {
+                                count = @Model.PageSize * (@Model.PageNumber - 1);
+                            }
                             foreach (var item in Model)
                             {
                                 count++;
@@ -232,23 +245,23 @@
                                         @count
                                     </td>
                                     @*<td>
-                                            @Html.DisplayFor(modelItem => item.FSujectId)
-                                        </td>*@
+                        @Html.DisplayFor(modelItem => item.FSujectId)
+                    </td>*@
                                     @*<td>
-                                            @Html.DisplayFor(modelItem => item.FCourseId)
-                                        </td>*@
+                        @Html.DisplayFor(modelItem => item.FCourseId)
+                    </td>*@
                                     <td>
                                         @Html.DisplayFor(modelItem => item.FCourseName)
                                     </td>
                                     @*<td>
-                                            @Html.DisplayFor(modelItem => item.FCategoryId)
-                                        </td>*@
+                        @Html.DisplayFor(modelItem => item.FCategoryId)
+                    </td>*@
                                     <td>
                                         @Html.DisplayFor(modelItem => item.FCategoryName)
                                     </td>
                                     @*<td>
-                                            @Html.DisplayFor(modelItem => item.FTypeId)
-                                        </td>*@
+                        @Html.DisplayFor(modelItem => item.FTypeId)
+                    </td>*@
                                     <td>
                                         @Html.DisplayFor(modelItem => item.FTypeName)
                                     </td>
@@ -256,53 +269,58 @@
                                         @Html.DisplayFor(modelItem => item.FQuestion)
                                     </td>
                                     @*<td>
-                                            @Html.DisplayFor(modelItem => item.FOption1)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.FOption2)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.FOption3)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.FOption4)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.FAns)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.FAnsAnalyze)
-                                        </td>*@
+                        @Html.DisplayFor(modelItem => item.FOption1)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FOption2)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FOption3)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FOption4)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FAns)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FAnsAnalyze)
+                    </td>*@
                                 <td>
-                                    <i class="fas fa-eye">@Html.ActionLink("查看", "Details", new { id = item.FSujectId }) |</i>
-                                    <i class="fas fa-edit">@Html.ActionLink("編輯", "Edit", new { id = item.FSujectId,coId=item.FCourseId,caId=item.FCategoryId }) |</i>
-                                    <i class="fas fa-trash-alt">@Html.ActionLink("刪除", "Delete", "QuestionBank", new { id = item.FSujectId }, new { onclick = "return confirm('確定要刪除嗎?')"})</i>
+                                    <button type="button" class="btn btn-outline-success"><i class="fas fa-eye">@Html.ActionLink("查看", "Details", new { id = item.FSujectId })</i></button>
+                                    <button type="button" class="btn btn-outline-warning"><i class="fas fa-edit">@Html.ActionLink("編輯", "Edit", new { id = item.FSujectId, coId = item.FCourseId, caId = item.FCategoryId })</i></button>                                    
+                                    <button type="button" class="btn btn-outline-danger"><i class="fas fa-trash-alt"><a href=@Url.Action("Delete",new { id = item.FSujectId }) onclick="return alertDelete(event,@item.FSujectId); ">刪除</a></i></button>
                                 </td>
                                 </tr>
                             }
-                        }
+                                        }
                     </tbody>
                 </table>
                 <div class="ListFooter">
                     <div data-qa="pageTotal">
-                        顯示 1 至 2 筆，共 2 筆資料
+                        顯示 @(@count- @Model.Count()+1) 至 @count 筆，共 @Model.TotalItemCount.ToString() 筆資料
                     </div>
                     <css-1smfbm9>
                         <div class="MuiBox-root pageBox">
+                            <br />
+                            Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount |
+
+                            @Html.PagedListPager(Model, page => Url.Action("Index",
+                                new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
                             @*<button class="MuiButtonBase-root MuiIconButton-root jss66 jss72 Mui-disabled MuiIconButton-sizeSmall Mui-disabled" tabindex="-1" type="button" disabled="" aria-disabled="true"><span class="MuiIconButton-label"><svg class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit" focusable="false" viewBox="0 0 256 512" aria-hidden="true"><path d="M238.475 475.535l7.071-7.07c4.686-4.686 4.686-12.284 0-16.971L50.053 256 245.546 60.506c4.686-4.686 4.686-12.284 0-16.971l-7.071-7.07c-4.686-4.686-12.284-4.686-16.97 0L10.454 247.515c-4.686 4.686-4.686 12.284 0 16.971l211.051 211.05c4.686 4.686 12.284 4.686 16.97-.001z"></path></svg></span></button>
-                                <div class="MuiBox-root jss73" data-page="1" data-total-pages="1">
-                                    <div class="MuiFormControl-root MuiTextField-root pageNum">
-                                        <div class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-formControl">
-                                            <input aria-invalid="false" type="text" class="MuiInputBase-input MuiOutlinedInput-input jss64" value="1">
-                                            <fieldset aria-hidden="true" class="jss22 MuiOutlinedInput-notchedOutline" style="padding-left: 8px;"><legend class="jss23" style="width: 0.01px;"><span>​</span></legend></fieldset>
-                                        </div>
-                                    </div>
-                                    <div class="MuiBox-root jss74">
-                                        <p class="MuiTypography-root MuiTypography-body1">／</p>
-                                    </div>
-                                    <p class="MuiTypography-root MuiTypography-body1">1</p>
-                                </div>
-                                <button class="MuiButtonBase-root MuiIconButton-root jss66 jss75 Mui-disabled MuiIconButton-sizeSmall Mui-disabled" tabindex="-1" type="button" disabled="" aria-disabled="true"><span class="MuiIconButton-label"><svg class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit" focusable="false" viewBox="0 0 256 512" aria-hidden="true"><path d="M17.525 36.465l-7.071 7.07c-4.686 4.686-4.686 12.284 0 16.971L205.947 256 10.454 451.494c-4.686 4.686-4.686 12.284 0 16.971l7.071 7.07c4.686 4.686 12.284 4.686 16.97 0l211.051-211.05c4.686-4.686 4.686-12.284 0-16.971L34.495 36.465c-4.686-4.687-12.284-4.687-16.97 0z"></path></svg></span></button>*@
+        <div class="MuiBox-root jss73" data-page="1" data-total-pages="1">
+            <div class="MuiFormControl-root MuiTextField-root pageNum">
+                <div class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-formControl">
+                    <input aria-invalid="false" type="text" class="MuiInputBase-input MuiOutlinedInput-input jss64" value="1">
+                    <fieldset aria-hidden="true" class="jss22 MuiOutlinedInput-notchedOutline" style="padding-left: 8px;"><legend class="jss23" style="width: 0.01px;"><span>​</span></legend></fieldset>
+                </div>
+            </div>
+            <div class="MuiBox-root jss74">
+                <p class="MuiTypography-root MuiTypography-body1">／</p>
+            </div>
+            <p class="MuiTypography-root MuiTypography-body1">1</p>
+        </div>
+        <button class="MuiButtonBase-root MuiIconButton-root jss66 jss75 Mui-disabled MuiIconButton-sizeSmall Mui-disabled" tabindex="-1" type="button" disabled="" aria-disabled="true"><span class="MuiIconButton-label"><svg class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit" focusable="false" viewBox="0 0 256 512" aria-hidden="true"><path d="M17.525 36.465l-7.071 7.07c-4.686 4.686-4.686 12.284 0 16.971L205.947 256 10.454 451.494c-4.686 4.686-4.686 12.284 0 16.971l7.071 7.07c4.686 4.686 12.284 4.686 16.97 0l211.051-211.05c4.686-4.686 4.686-12.284 0-16.971L34.495 36.465c-4.686-4.687-12.284-4.687-16.97 0z"></path></svg></span></button>*@
                         </div>
                     </css-1smfbm9>
                 </div>
@@ -310,3 +328,39 @@
         </div>
     </div>
 </body>
+
+@section Scripts {
+    <script>
+        function alertDelete(event,id) {
+            /*alert(id);*/
+            event.preventDefault();
+
+            Swal.fire({
+                title: '確定要刪除嗎?',
+                /*text: "You won't be able to revert this!",*/
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: '確定',
+                cancelButtonText:'取消'
+                
+            }).then(async(result) => {
+                 if (result.isConfirmed) {
+
+                    await fetch("@Url.Content("~/QuestionBank/Delete")" + `?id=${id}`);
+                        
+                    await Swal.fire(
+                        '刪除成功!',
+                        '該筆資料已刪除',
+                        'success'
+                     )
+                     location.reload();                     
+                }
+                
+            })
+            return false;
+        };
+
+    </script>
+}

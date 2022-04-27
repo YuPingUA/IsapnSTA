@@ -4,90 +4,120 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
-
-<h4>CExamPaperViewModel</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>            
-                <input type="hidden" asp-for="FExamPaperId" class="form-control" />                
-                <div class="form-group">
-                    <label asp-for="FClassPeriod" class="control-label"></label>
-                    @*<input asp-for="FClassPeriod" class="form-control" />*@
-                    <select asp-for="FClassPeriod" class="form-control"></select>
-                    <span asp-validation-for="FClassPeriod" class="text-danger"></span>
-                </div>
-            <div class="form-group">
-                <label asp-for="FCourseName" class="control-label"></label>
-                @*<input asp-for="FCourseId" class="form-control" />*@
-                <select asp-for="FCourseId" class="form-control"></select>
-                <span asp-validation-for="FCourseId" class="text-danger"></span>
-            </div>
-            @*<div class="form-group">
-                <label asp-for="FCourseName" class="control-label"></label>
-                <input asp-for="FCourseName" class="form-control" />
-                <span asp-validation-for="FCourseName" class="text-danger"></span>
-            </div>*@
-            <div class="form-group">
-                <label asp-for="FName" class="control-label"></label>
-                <input asp-for="FName" class="form-control" />
-                <span asp-validation-for="FName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FDescription" class="control-label"></label>
-                <input asp-for="FDescription" class="form-control" />
-                <span asp-validation-for="FDescription" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FBegin" class="control-label"></label>
-                <input asp-for="FBegin" class="form-control" />
-                <span asp-validation-for="FBegin" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FEnd" class="control-label"></label>
-                <input asp-for="FEnd" class="form-control" />
-                <span asp-validation-for="FEnd" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FTimeLimit" class="control-label"></label>
-                <input asp-for="FTimeLimit" class="form-control" />
-                <span asp-validation-for="FTimeLimit" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FReveal" class="control-label"></label>
-                <input asp-for="FReveal" class="form-control" />
-                <span asp-validation-for="FReveal" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FOrder" class="control-label"></label>
-                <input asp-for="FOrder" class="form-control" />
-                <span asp-validation-for="FOrder" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+<div class="container mt-5">
+    <div>
+        <h3><a asp-action="Index"><<返回</a></h3>
     </div>
+    <br />
+    <h1>新增試卷</h1>
+    <hr />
+
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="FExamPaperId" class="form-control" />
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label asp-for="FClassPeriod" class="control-label"></label>
+                            @*<input asp-for="FClassPeriod" class="form-control" />*@
+                            <select asp-for="FClassPeriod" class="form-control"></select>
+                            <span asp-validation-for="FClassPeriod" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label asp-for="FCourseName" class="control-label"></label>
+                            @*<input asp-for="FCourseId" class="form-control" />*@
+                            <select asp-for="FCourseId" class="form-control"></select>
+                            <span asp-validation-for="FCourseId" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                @*<div class="form-group">
+            <label asp-for="FCourseName" class="control-label"></label>
+            <input asp-for="FCourseName" class="form-control" />
+            <span asp-validation-for="FCourseName" class="text-danger"></span>
+        </div>*@
+                <div class="form-group">
+                    <label asp-for="FName" class="control-label"></label>
+                    <input asp-for="FName" class="form-control" />
+                    <span asp-validation-for="FName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="FDescription" class="control-label"></label>
+                    <textarea asp-for="FDescription" class="form-control"></textarea>
+                    <span asp-validation-for="FDescription" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="FBegin" class="control-label"></label>
+                    <input asp-for="FBegin" class="form-control" />
+                    <span asp-validation-for="FBegin" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="FEnd" class="control-label"></label>
+                    <input asp-for="FEnd" class="form-control" />
+                    <span asp-validation-for="FEnd" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="FTimeLimit" class="control-label"></label>
+                    <input asp-for="FTimeLimit" class="form-control" />
+                    <span asp-validation-for="FTimeLimit" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="FReveal" class="control-label"></label>
+                    <input asp-for="FReveal" class="form-control" />
+                    <span asp-validation-for="FReveal" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="FOrder" class="control-label"></label>
+                    <input asp-for="FOrder" class="form-control" />
+                    <span asp-validation-for="FOrder" class="text-danger"></span>
+                </div>
+                <select class="form-select" size="10" aria-label="size 10 select example" id="addSj" >
+                   
+                </select>
+                
+                <select class="form-select" size="10" aria-label="size 10 select example" id="showSj" >
+                    
+                </select>
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+
+
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+    @section Scripts {
 
-@section Scripts {
+        <script>
+            const selClass = document.querySelector('#FClassPeriod');
+            const selCourse = document.querySelector('#FCourseId');
 
-    <script>
-    const selClass = document.querySelector('#FClassPeriod');
-    const selCourse = document.querySelector('#FCourseId');
+
+            const seladdSj = document.querySelector('#addSj');
+            const selshowSj = document.querySelector('#showSj');
+
+
 
         selClass.addEventListener('change', async function () {
             const classfi = selClass.options[selClass.selectedIndex].value;
             await LoadCourse(classfi);
+
+            const course = selCourse.options[selCourse.selectedIndex].value;
+            LoadQuestion(course)
     })
 
-
+            //使用者選取了不同課程
+            selCourse.addEventListener('change', function () {
+                const course = selCourse.options[selCourse.selectedIndex].value;
+                LoadQuestion(course);
+            })
 
     async function LoadClassCourse() {
         //載入班級
@@ -98,6 +128,11 @@
         const classfi = selClass.options[selClass.selectedIndex].value;
         await LoadCourse(classfi);
 
+
+        //根據課程載入題目
+        const course = selCourse.options[selCourse.selectedIndex].value;
+        await LoadQuestion(course);
+
     }
 
         LoadClassCourse();
@@ -105,6 +140,11 @@
         async function LoadCourse(classPeriod) {
             const responseCourse = await fetch("@Url.Content("~/TExamPaper/courseFilter")" + `?classPeriod=${classPeriod}`);
         renderCourse(await responseCourse.json());
+            }
+
+            async function LoadQuestion(courseId) {
+                const responseQuestion = await fetch('@Url.Content("~/TExamPaper/ExamPshowSj")' + `?courseId=${courseId}`);
+        renderQuestion(await responseQuestion.json());
     }
 
         function renderClass(datas) {
@@ -121,8 +161,47 @@
             const opt = new Option(item.fCourse, item.fCourseId);
             selCourse.options.add(opt);
         })
-    }
-    </script>
+        }
 
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+            function renderQuestion(datas) {
+                selshowSj.options.length = 0;
+                datas.forEach((item) => {
+                    const opt = new Option(item.fName + "  " + item.fQuestion + "  " + item.fOption1 + "  " + item.fOption2 + "  " + item.fOption3 + "  " + item.fOption4, item.fSujectId);
+                    selshowSj.options.add(opt);
+                })
+            }
+
+
+
+            let ShowSj = document.querySelector('#showSj');
+            let AddSj = document.querySelector('#addSj');
+            
+
+            $(function () {               
+
+                //雙擊選項
+                $('#addSj').dblclick(function () { //繫結雙擊事件
+                    //獲取選項,刪除並追加給對方
+                    console.log("題目:" + AddSj.options[AddSj.selectedIndex].value);
+                    $("option:selected", this.value).appendTo('#showSj'); //追加給對方
+                    $("option:selected", this).appendTo('#showSj'); //追加給對方
+
+                });
+                ;
+                //雙擊選項
+                $('#showSj').dblclick(function () {
+                    console.log("題目:" + ShowSj.options[ShowSj.selectedIndex].value);
+                    
+                    $("option:selected", this.value).appendTo('#addSj');
+                    $("option:selected", this).appendTo('#addSj');
+
+                });
+
+            });
+           
+            
+
+        </script>
+
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }

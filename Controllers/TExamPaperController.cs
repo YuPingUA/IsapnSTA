@@ -63,10 +63,10 @@ namespace ISpanSTA.ViewModel
 
                                FClassPeriod = ep.FClassPeriod,
                                FCourseId = ep.FCourseId,
-                               FCourseName = co.FCourse
+                               FCourseName = co.FCourse,
+                               FDescription = ep.FDescription
 
                               
-
                                //epd.FSujectId
                            };
 
@@ -81,9 +81,34 @@ namespace ISpanSTA.ViewModel
         // GET: CExamPaperController/Create
         public ActionResult Create()
         {
-            //ViewData["FClassPeriod"] = new SelectList(_context.TClassFullInfos, "FClassPeriod", "FClassPeriod");
-            //ViewData["FCourseName"] = new SelectList(_context.TClassCourseFullInfos, "FCourseId", "FCourse");
+           // TClassCourseFullInfo courseId = _context.TClassCourseFullInfo.FirstOrDefault(n => n.fName == courseName);
+            int CourseId = 1; // courseId.fCourseId;
+
+            var subjects = (from s in _context.TSujects
+                              where s.FCourseId == CourseId
+                              select s).ToList();
+           
+            //List<CExamViewModel> EpSjList = new List<CExamViewModel>() ;
+            //var data = from s in _context.TSujects
+            //           join c in _context.TCategories on s.FCategoryId equals c.FCategoryId
+            //           join co in _context.TClassCourseFullInfos on s.FCourseId equals co.FCourseId
+            //           join t in _context.TTypes on s.FTypeId equals t.FTypeId
+            //           select new CExamViewModel
+            //           {
+            //               FSujectId = s.FSujectId,
+            //               FCourseId = s.FCourseId,
+            //               FCategoryId = s.FCategoryId,
+            //               FTypeId = s.FTypeId,
+            //               FQuestion = s.FQuestion,
+            //               FCourseName = co.FCourse,
+            //               FCategoryName = c.FName,
+            //               FTypeName = t.FType
+            //           };
             
+            //foreach (var t in data)
+            //    EpSjList.Add(t);
+            //return View(list);
+
             return View();
         }
 
@@ -94,6 +119,7 @@ namespace ISpanSTA.ViewModel
         {
             try
             {
+                var tempEpId = ep.FExamPaperId;
                 TExaminationPaper ts = new TExaminationPaper();
                 ts.FExamPaperId = ep.FExamPaperId;
                 ts.FClassPeriod = ep.FClassPeriod;
@@ -109,9 +135,18 @@ namespace ISpanSTA.ViewModel
                 _context.TExaminationPapers.Add(ts);
                 _context.SaveChanges();
 
+                tempEpId++;
 
+                List<int> EpSjList = new List<int>();
+                TExamPaperDetail EpSjDetail = new TExamPaperDetail();
 
-
+                foreach (int s in EpSjList)
+                {
+                    EpSjDetail.FSujectId = s;
+                    EpSjDetail.FExamPaperId = tempEpId;
+                    _context.TExamPaperDetails.Add(EpSjDetail);
+                    _context.SaveChanges();
+                }
 
 
 
@@ -221,6 +256,30 @@ namespace ISpanSTA.ViewModel
             return Json(courses);
             //
         }
+
+
+        public IActionResult ExamPshowSj(int courseId)
+        {
+            var questions = (from q in _context.TSujects
+                            join ca in _context.TCategories on q.FCategoryId equals ca.FCategoryId
+                            where q.FCourseId == courseId
+                             select new
+                            {
+                                q.FSujectId,
+                                ca.FName,
+                                q.FQuestion,
+                                q.FOption1,
+                                q.FOption2,
+                                q.FOption3,
+                                q.FOption4,
+                                q.FAns,
+                                q.FAnsAnalyze
+                            }).OrderBy(q => q.FSujectId);
+
+            return Json(questions);
+
+        }
+
 
     }
 }

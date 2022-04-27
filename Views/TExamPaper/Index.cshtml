@@ -94,7 +94,7 @@
                 <div class="eva-menu-grpbox">
                     <div class="eva-menu-grp">
                         <div class="eva-menu-grptxt">
-                            <a href="~/TExamPaper/Index">測驗結果分析</a>
+                            <a href="~/TSjCategory/Index">測驗結果分析</a>
                         </div>
                     </div>
                 </div>
@@ -263,17 +263,17 @@
                                         @Html.DisplayFor(modelItem => item.FOrder)
                                     </td>*@
                             <td>
-                                <i class="fas fa-eye">@Html.ActionLink("查看", "Details", new { id = item.FExamPaperId }) |</i>
-                                <i class="fas fa-edit">@Html.ActionLink("編輯", "Edit", new { id = item.FExamPaperId }) |</i>
-                                <i class="fas fa-trash-alt">@Html.ActionLink("刪除", "Delete", "TExamPaper", new { id = item.FExamPaperId }, new { onclick = "return confirm('確定要刪除嗎?')" })</i>
-                            </td>
+                                <button type="button" class="btn btn-outline-success"><i class="fas fa-eye">@Html.ActionLink("查看", "Details", new { id = item.FExamPaperId })</i></button>
+                                <button type="button" class="btn btn-outline-warning"><i class="fas fa-edit">@Html.ActionLink("編輯", "Edit", new { id = item.FExamPaperId })</i></button>
+                                <button type="button" class="btn btn-outline-danger"><i class="fas fa-trash-alt">@Html.ActionLink("刪除", "Delete", "TExamPaper", new { id = item.FExamPaperId }, new { onclick = "return confirm('確定要刪除嗎?')" })</i></button>
+</td>
                             </tr>
                         }
                     </tbody>
                 </table>
                 <div class="ListFooter">
                     <div data-qa="pageTotal">
-                        顯示 1 至 2 筆，共 2 筆資料
+                        顯示 1 至 10 筆，共 10 筆資料
                     </div>
                     <css-1smfbm9>
                         <div class="MuiBox-root pageBox">

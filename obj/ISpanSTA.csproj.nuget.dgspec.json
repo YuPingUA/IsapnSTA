@@ -63,6 +63,14 @@
             "Microsoft.aspnetcore.staticfiles": {
               "target": "Package",
               "version": "[2.2.0, )"
+            },
+            "X.PagedList": {
+              "target": "Package",
+              "version": "[8.1.0, )"
+            },
+            "X.PagedList.Mvc.Core": {
+              "target": "Package",
+              "version": "[8.1.0, )"
             }
           },
           "imports": [

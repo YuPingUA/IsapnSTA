@@ -7,6 +7,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using X.PagedList;
+using X.PagedList.Mvc.Core;
 
 namespace ISpanSTA.Controllers
 {
@@ -18,9 +20,24 @@ namespace ISpanSTA.Controllers
         {
             _context = context;
         }
-        // GET: QuestionBankController
-        public IActionResult Index()
+        // GET: QuestionBankController        
+        public IActionResult Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
+            ViewBag.CurrentSort = sortOrder;
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
+
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewBag.CurrentFilter = searchString;
+
             var data = from s in _context.TSujects
                          join c in _context.TCategories on s.FCategoryId equals c.FCategoryId
                          join co in _context.TClassCourseFullInfos on s.FCourseId equals co.FCourseId
@@ -31,7 +48,34 @@ namespace ISpanSTA.Controllers
             List<CExamViewModel> list = new List<CExamViewModel>();
             foreach (var t in data)                
                 list.Add(t);
-            return View(list);
+
+            //if (!String.IsNullOrEmpty(searchString))
+            //{
+            //    students = students.Where(s => s.LastName.Contains(searchString)
+            //                           || s.FirstMidName.Contains(searchString));
+            //}
+            //switch (sortOrder)
+            //{
+            //    case "name_desc":
+            //        students = students.OrderByDescending(s => s.LastName);
+            //        break;
+            //    case "Date":
+            //        students = students.OrderBy(s => s.EnrollmentDate);
+            //        break;
+            //    case "date_desc":
+            //        students = students.OrderByDescending(s => s.EnrollmentDate);
+            //        break;
+            //    default:  // Name ascending 
+            //        students = students.OrderBy(s => s.LastName);
+            //        break;
+            //}
+
+            int pageSize = 10;
+            int pageNumber = (page ?? 1);
+            return View(list.ToPagedList(pageNumber, pageSize));
+
+
+            //return View(list);
         }
 
         // GET: QuestionBankController/Details/5
@@ -232,7 +276,7 @@ namespace ISpanSTA.Controllers
         //}
 
 
-        ////讀出不重複的課程名稱
+        //讀出不重複的課程名稱
         public IActionResult courseFilter()
         {
             var courses = _context.TClassCourseFullInfos.Select(co => new
@@ -245,7 +289,7 @@ namespace ISpanSTA.Controllers
 
         }
 
-        ////根據課程名稱讀出對應類別
+        //根據課程名稱讀出對應類別
         public IActionResult categoryFilter(int courseId)
         {
             var categorys = _context.TCategories.

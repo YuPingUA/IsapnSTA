@@ -100,28 +100,28 @@ namespace ISpanSTA.ViewModel
             set { this.subject.FQuestion = value; }
         }
        
-        [DisplayName("選項1")]
+        [DisplayName("選項A")]
         public string FOption1
         {
             get { return this.subject.FOption1; }
             set { this.subject.FOption1 = value; }
         }
 
-        [DisplayName("選項2")]
+        [DisplayName("選項B")]
         public string FOption2
         {
             get { return this.subject.FOption2; }
             set { this.subject.FOption2 = value; }
         }
 
-        [DisplayName("選項3")]
+        [DisplayName("選項C")]
         public string FOption3
         {
             get { return this.subject.FOption3; }
             set { this.subject.FOption3 = value; }
         }
 
-        [DisplayName("選項4")]
+        [DisplayName("選項D")]
         public string FOption4
         {
             get { return this.subject.FOption4; }
