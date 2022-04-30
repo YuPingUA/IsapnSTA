@@ -320,3 +320,4 @@ E:\專題製作第二組\IsapnSTA core-20220413T062834Z-001\IsapnSTA core\ISpanS
 E:\專題製作第二組\IsapnSTA core-20220413T062834Z-001\IsapnSTA core\ISpanSTA\obj\Debug\net5.0\Razor\Views\SExamIndex\test.cshtml.g.cs
 E:\專題製作第二組\IsapnSTA core-20220413T062834Z-001\IsapnSTA core\ISpanSTA\obj\Debug\net5.0\Razor\Views\SExamIndex\testp.cshtml.g.cs
 E:\專題製作第二組\IsapnSTA core-20220413T062834Z-001\IsapnSTA core\ISpanSTA\obj\Debug\net5.0\Razor\Views\TSjCategory\AddOrEdit.cshtml.g.cs
+E:\專題製作第二組\IsapnSTA core-20220413T062834Z-001\IsapnSTA core\ISpanSTA\obj\Debug\net5.0\Razor\Views\TSjCategory\Index2.cshtml.g.cs

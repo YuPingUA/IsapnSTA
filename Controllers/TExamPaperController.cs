@@ -52,6 +52,7 @@ namespace ISpanSTA.ViewModel
                 var data = from epd in _context.TExamPaperDetails
                            join ep in _context.TExaminationPapers on epd.FExamPaperId equals ep.FExamPaperId
                            join co in _context.TClassCourseFullInfos on ep.FCourseId equals co.FCourseId
+                           join sj in _context.TSujects on epd.FSujectId equals sj.FSujectId
                            where epd.FExamPaperId == (int)id
                            orderby epd.FSujectId ascending //將對應的試卷題目照題目ID由小到大排序
                            select new CExampDetailsViewModel
@@ -59,12 +60,25 @@ namespace ISpanSTA.ViewModel
                                FExamPaperId = epd.FExamPaperId,
                                FSujectId = epd.FSujectId,
                                FEpDetailId = epd.FEpDetailId,
-                               FExamPaperName = ep.FName,
+                               FName = ep.FName,
 
                                FClassPeriod = ep.FClassPeriod,
                                FCourseId = ep.FCourseId,
                                FCourseName = co.FCourse,
-                               FDescription = ep.FDescription
+                               FDescription = ep.FDescription,
+                               FBegin = ep.FBegin,
+                               FEnd = ep.FEnd,
+                               FTimeLimit = ep.FTimeLimit,
+                               FReveal = ep.FReveal,
+                               FOrder = ep.FOrder,
+
+                               FQuestion = sj.FQuestion,
+                               FOption1 = sj.FOption1,
+                               FOption2 =sj.FOption2,
+                               FOption3 = sj.FOption3,
+                               FOption4 = sj.FOption4,
+                               FAns=sj.FAns,
+                               FAnsAnalyze = sj.FAnsAnalyze
 
                               
                                //epd.FSujectId
@@ -112,19 +126,28 @@ namespace ISpanSTA.ViewModel
             return View();
         }
 
+
+        //public int[] getSjId;
+        //public IActionResult GetSjId(int[] tempSj)
+        //{
+        //    getSjId = tempSj;
+        //    //var testc = Newtonsoft.Json.JsonConvert.SerializeObject(SjId);
+        //    return Content(getSjId.ToString());
+        //}
+
         // POST: CExamPaperController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(CExampDetailsViewModel ep)
+        public IActionResult Create(CExampDetailsViewModel ep)
         {
             try
             {
-                var tempEpId = ep.FExamPaperId;
+               
                 TExaminationPaper ts = new TExaminationPaper();
                 ts.FExamPaperId = ep.FExamPaperId;
                 ts.FClassPeriod = ep.FClassPeriod;
                 ts.FCourseId = ep.FCourseId;
-                ts.FName = ep.FExamPaperName;
+                ts.FName = ep.FName;
                 ts.FBegin = ep.FBegin;
                 ts.FEnd = ep.FEnd;
                 ts.FReveal = ep.FReveal;
@@ -135,13 +158,14 @@ namespace ISpanSTA.ViewModel
                 _context.TExaminationPapers.Add(ts);
                 _context.SaveChanges();
 
-                tempEpId++;
+                var tempEpId = ts.FExamPaperId;
 
-                List<int> EpSjList = new List<int>();
-                TExamPaperDetail EpSjDetail = new TExamPaperDetail();
+                int[] EpSjList = ep.addSj;
 
+               
                 foreach (int s in EpSjList)
                 {
+                    TExamPaperDetail EpSjDetail = new TExamPaperDetail();
                     EpSjDetail.FSujectId = s;
                     EpSjDetail.FExamPaperId = tempEpId;
                     _context.TExamPaperDetails.Add(EpSjDetail);
@@ -160,6 +184,9 @@ namespace ISpanSTA.ViewModel
                 return View(ep);               
             }
         }
+           
+
+
 
         // GET: CExamPaperController/Edit/5
         public ActionResult Edit(int id)

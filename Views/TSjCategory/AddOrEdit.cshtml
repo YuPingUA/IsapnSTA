@@ -10,8 +10,8 @@
 <h4>TCategory</h4>*@
 <!--<hr />-->
 <div class="row">
-    <div class="col-md-4">
-        <form name="myForm" asp-action="AddOrEdit" asp-route-id="@Model.FCategoryId" onsubmit="return jQueryAjaxPost(this);"autocomplete="off">
+    <div class="col">
+        <form name="myForm" asp-action="AddOrEdit" onsubmit="return jQueryAjaxPost(this);"autocomplete="off">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>            
                 <input type="hidden" asp-for="FCategoryId" class="form-control" /> 
                 <input asp-for="FCourseId" class="form-control" />

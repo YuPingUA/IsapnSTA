@@ -94,7 +94,7 @@ namespace ISpanSTA.ViewModel
         }
 
         [DisplayName("試卷標題")]
-        public string FExamPaperName
+        public string FName
         {
             get { return this.examp.FName; }
             set { this.examp.FName = value; }
@@ -148,5 +148,55 @@ namespace ISpanSTA.ViewModel
             set { this.exampd.FSujectId = value; }
         }
 
+        [DisplayName("題目")]
+        public string FQuestion
+        {
+            get { return this.subject.FQuestion; }
+            set { this.subject.FQuestion = value; }
+        }
+
+        [DisplayName("選項A")]
+        public string FOption1
+        {
+            get { return this.subject.FOption1; }
+            set { this.subject.FOption1 = value; }
+        }
+
+        [DisplayName("選項B")]
+        public string FOption2
+        {
+            get { return this.subject.FOption2; }
+            set { this.subject.FOption2 = value; }
+        }
+
+        [DisplayName("選項C")]
+        public string FOption3
+        {
+            get { return this.subject.FOption3; }
+            set { this.subject.FOption3 = value; }
+        }
+
+        [DisplayName("選項D")]
+        public string FOption4
+        {
+            get { return this.subject.FOption4; }
+            set { this.subject.FOption4 = value; }
+        }
+
+        [DisplayName("答案")]
+        public int? FAns
+        {
+            get { return this.subject.FAns; }
+            set { this.subject.FAns = value; }
+        }
+
+        [DisplayName("解析")]
+        public string FAnsAnalyze
+        {
+            get { return this.subject.FAnsAnalyze; }
+            set { this.subject.FAnsAnalyze = value; }
+        }
+
+        public int[] addSj { get; set; }
     }
 }

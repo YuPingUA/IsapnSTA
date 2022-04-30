@@ -1,4 +1,4 @@
-﻿@model ISpanSTA.ViewModel.CExamPaperViewModel
+﻿@model ISpanSTA.ViewModel.CExampDetailsViewModel
 
 @{
     ViewData["Title"] = "Create";
@@ -13,7 +13,7 @@
     <hr />
 
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-12">
             <form asp-action="Create">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <input type="hidden" asp-for="FExamPaperId" class="form-control" />
@@ -51,40 +51,54 @@
                     <textarea asp-for="FDescription" class="form-control"></textarea>
                     <span asp-validation-for="FDescription" class="text-danger"></span>
                 </div>
-                <div class="form-group">
-                    <label asp-for="FBegin" class="control-label"></label>
-                    <input asp-for="FBegin" class="form-control" />
-                    <span asp-validation-for="FBegin" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="FEnd" class="control-label"></label>
-                    <input asp-for="FEnd" class="form-control" />
-                    <span asp-validation-for="FEnd" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="FTimeLimit" class="control-label"></label>
-                    <input asp-for="FTimeLimit" class="form-control" />
-                    <span asp-validation-for="FTimeLimit" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="FReveal" class="control-label"></label>
-                    <input asp-for="FReveal" class="form-control" />
-                    <span asp-validation-for="FReveal" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="FOrder" class="control-label"></label>
-                    <input asp-for="FOrder" class="form-control" />
-                    <span asp-validation-for="FOrder" class="text-danger"></span>
-                </div>
-                <select class="form-select" size="10" aria-label="size 10 select example" id="addSj" >
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label asp-for="FBegin" class="control-label"></label>
+                            <input asp-for="FBegin" class="form-control" />
+                            <span asp-validation-for="FBegin" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label asp-for="FEnd" class="control-label"></label>
+                            <input asp-for="FEnd" class="form-control" />
+                            <span asp-validation-for="FEnd" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>  
+                <div class="row">
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label asp-for="FTimeLimit" class="control-label"></label>
+                            <input asp-for="FTimeLimit" class="form-control" />
+                            <span asp-validation-for="FTimeLimit" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label asp-for="FOrder" class="control-label"></label>
+                            <input asp-for="FOrder" class="form-control" />
+                            <span asp-validation-for="FOrder" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label asp-for="FReveal" class="control-label"></label>
+                            <input asp-for="FReveal" class="form-control" />
+                            <span asp-validation-for="FReveal" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>               
+                <select class="form-select" multiple  size="10" aria-label="size 10 select example" name="addSj" id="addSj" style="width:100%" >
                    
                 </select>
                 
-                <select class="form-select" size="10" aria-label="size 10 select example" id="showSj" >
+                <select class="form-select" size="10" aria-label="size 10 select example" id="showSj" style="width:100%" >
                     
                 </select>
                 <div class="form-group">
-                    <input type="submit" value="Create" class="btn btn-primary" />
+                    <input type="submit" value="Create" class="btn btn-primary" id="btnC" />
                 </div>
             </form>
         </div>
@@ -175,14 +189,23 @@
 
             let ShowSj = document.querySelector('#showSj');
             let AddSj = document.querySelector('#addSj');
-            
+            let tempSj = [];
 
-            $(function () {               
+            $(function () {
 
                 //雙擊選項
                 $('#addSj').dblclick(function () { //繫結雙擊事件
                     //獲取選項,刪除並追加給對方
                     console.log("題目:" + AddSj.options[AddSj.selectedIndex].value);
+                    for (var i = 0; i < tempSj.length; i++) {
+
+                        if (tempSj[i] === AddSj.options[AddSj.selectedIndex].value) {
+
+                            tempSj.splice(i, 1);
+                        }
+
+                    }
+                    console.log(tempSj)
                     $("option:selected", this.value).appendTo('#showSj'); //追加給對方
                     $("option:selected", this).appendTo('#showSj'); //追加給對方
 
@@ -191,15 +214,34 @@
                 //雙擊選項
                 $('#showSj').dblclick(function () {
                     console.log("題目:" + ShowSj.options[ShowSj.selectedIndex].value);
-                    
-                    $("option:selected", this.value).appendTo('#addSj');
-                    $("option:selected", this).appendTo('#addSj');
-
+                    tempSj.push(ShowSj.options[ShowSj.selectedIndex].value)
+                    //$("option:selected", this.value).appendTo('#addSj');
+                    //$("option:selected", this).appendTo('#addSj');
+                    $("#showSj>option:selected").appendTo('#addSj'); //.prop('selected');
+                  
+                    console.log(tempSj)
                 });
 
             });
-           
+
+
+         /*   let btnc = document.querySelector("#btnC");*/
+
+            @*btnc.addEventListener('click', async(evt) => {
+               // evt.preventDefault();
+                //將表單中的所有資料放進formData的變數中
+                //const formData = new FormData(document.member);
+                console.log("題目暮暮暮" + tempSj);
+
             
+                let responseC = await fetch('@Url.Content("~/TExamPaper/GetSjId")' + `?tempSj=${tempSj}`);
+            });*@
+            @*//fetch()
+                fetch('@Url.Action("GetSjId", "TExamPaper")', {
+                    method: 'POST',
+                    body: tempSj
+                }) *@
+
 
         </script>
 

@@ -17,7 +17,7 @@ namespace ISpanSTA.Controllers
             _context = context;
         }
         // GET: TSjCategoryController
-        public ActionResult Index()/* int? courseId*/
+        public IActionResult Index()/* int? courseId*/
         {
             var data = from c in _context.TCategories
                        //where c.FCourseId == (int)courseId
@@ -26,6 +26,37 @@ namespace ISpanSTA.Controllers
             foreach (var t in data)
                 list.Add(t);
             return View(list);
+        }
+
+        public IActionResult Index2()/* int? courseId*/
+        {
+            var data = from c in _context.TCategories
+                           //where c.FCourseId == (int)courseId
+                       select c;
+            List<TCategory> list = new List<TCategory>();
+            foreach (var t in data)
+                list.Add(t);
+            return View();
+        }
+
+        public IActionResult save(TCategory ca)
+        {
+            bool status = false;
+
+            if (ModelState.IsValid)
+            {
+                _context.TCategories.Add(ca);
+                _context.SaveChanges();
+                status = true;
+            }
+            return new JsonResult(new { status = status });
+
+        }
+
+        public IActionResult GetCategory()
+        {
+            var categories = _context.TCategories.ToList();
+            return Json(categories);
         }
 
         // GET: TSjCategoryController/Details/5
@@ -56,9 +87,9 @@ namespace ISpanSTA.Controllers
         }
 
         // GET: TSjCategoryController/Edit/5
-        public IActionResult AddOrEdit(int? id=0)
+        public IActionResult AddOrEdit(int? id)
         {
-            if(id==0)
+            if(id==null)
             return View(new TCategory());
             else
             {
@@ -78,7 +109,7 @@ namespace ISpanSTA.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (id == 0)
+                if (id == null)
                 {
                     _context.TCategories.Add(c);
                     _context.SaveChanges();
@@ -105,24 +136,34 @@ namespace ISpanSTA.Controllers
         }
 
         // GET: TSjCategoryController/Delete/5
-        public ActionResult Delete(int id)
+        public IActionResult Delete(int? id)
         {
-            return View();
+            if (id != null)
+            {
+                TCategory ca = _context.TCategories.FirstOrDefault(ca => ca.FCategoryId == (int)id);
+                if (ca != null)
+                {
+                    _context.TCategories.Remove(ca);
+                    _context.SaveChanges();
+                }
+            }
+            return RedirectToAction("Index");
+            
         }
 
         // POST: TSjCategoryController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Delete(int id, IFormCollection collection)
+        //{
+        //    try
+        //    {
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    catch
+        //    {
+        //        return View();
+        //    }
+        //}
     }
 }

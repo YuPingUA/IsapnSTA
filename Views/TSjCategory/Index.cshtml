@@ -49,7 +49,8 @@
                     <a onclick="showInPopup('@Url.Action("AddOrEdit","TSjCategory",new { id = item.FCategoryId },Context.Request.Scheme)','編輯類別')" class="btn btn-info text-white">編輯</a>
                     @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
                     @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                    @Html.ActionLink("Delete", "Delete", new { id = item.FCategoryId })
+                    <button type="button" class="btn btn-outline-danger"><i class="fas fa-trash-alt">@Html.ActionLink("刪除", "Delete", "TSjCategory", new { id = item.FCategoryId }, new { onclick = "return confirm('確定要刪除嗎?')" })</i></button>
                 </td>
             </tr>
         }
