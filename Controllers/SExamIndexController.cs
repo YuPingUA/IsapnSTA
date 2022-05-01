@@ -77,30 +77,59 @@ namespace ISpanSTA.Controllers
         // GET: SExamIndexController/Edit/5
         public IActionResult StartExam(int? id)
         {
-            //var data = from epd in _context.TExamPaperDetails
-            //           join ep in _context.TExaminationPapers on epd.FExamPaperId equals ep.FExamPaperId
-            //           join s in _context.TSujects on epd.FSujectId equals s.FSujectId
-            //           where ep.FExamPaperId == (int)id
-            //           select new CExampDetailsViewModel
-            //           {
-            //               FExamPaperId = ep.FExamPaperId,
-            //               FEpDetailId = epd.FEpDetailId,
-            //               FSujectId = s.FSujectId,
-            //               FExamPaperName = ep.FName,
-            //               FTimeLimit = ep.FTimeLimit,
-                           
-            //           };
+            if (id != null)
+            {
+                var data = from epd in _context.TExamPaperDetails
+                           join ep in _context.TExaminationPapers on epd.FExamPaperId equals ep.FExamPaperId
+                           join s in _context.TSujects on epd.FSujectId equals s.FSujectId
+                           where epd.FExamPaperId == (int)id
+                           select new CStartExamViewModel
+                           {
+                               FExamPaperId = epd.FExamPaperId,
+                               FEpDetailId = epd.FEpDetailId,
+                               FSujectId = s.FSujectId,
+                               FQuestion = s.FQuestion,
+                               FOption1 = s.FOption1,
+                               FOption2 = s.FOption2,
+                               FOption3 = s.FOption3,
+                               FOption4 = s.FOption4,
+                               FName = ep.FName,
+                               FTimeLimit = ep.FTimeLimit
 
-            //var data = from s in _context.TSujects
-            //           join epd in _context.TExaminationPapers on epd. equals s.
+                           };
 
+                List<CStartExamViewModel> list = new List<CStartExamViewModel>();
 
-            //List<CExampDetailsViewModel> da = new List<CExampDetailsViewModel>();
-            //int a = Session["exid"];
+                foreach (var t in data)
+                    list.Add(t);
 
-            List < TSuject > EpQuestion = new List<TSuject>();
+                //List < TSuject > EpQuestion = new List<TSuject>();
 
-            return View();
+                return View(list);
+            }
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult StartExam(TRecord rc)
+        {
+            try
+            {
+                TRecord ts = new TRecord();
+                ts.FRecordId = rc.FRecordId;
+                ts.FStudentId = rc.FStudentId;
+                ts.FExamPaperId = rc.FExamPaperId;
+                ts.FStudentId = rc.FStudentId;
+                ts.FDateTime = DateTime.Now;
+                ts.FChoose = rc.FChoose;
+
+                return RedirectToAction(nameof(Index));
+            }
+            catch
+            {
+                return View(rc);
+            }
         }
 
         // POST: SExamIndexController/Edit/5

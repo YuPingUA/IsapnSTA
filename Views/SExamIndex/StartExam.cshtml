@@ -1,0 +1,202 @@
+﻿@model IEnumerable<ISpanSTA.ViewModel.CStartExamViewModel>
+
+@{
+    ViewData["Title"] = "StartExam";
+}
+
+<h1>StartExam</h1>
+
+@*<p>
+        <a asp-action="Create">Create New</a>
+    </p>*@
+
+
+@*<div>
+        <div>
+            Q:@Html.DisplayFor(model => @Model.ToList()[0].FQuestion)
+        </div>
+        <div>
+            @Html.RadioButtonFor(model => @Model.ToList()[0].FChoose, "1") (A) @Html.DisplayFor(model => @Model.ToList()[0].FOption1)
+        </div>
+        <div>
+            @Html.RadioButtonFor(model => @Model.ToList()[0].FChoose, "2") (B) @Html.DisplayFor(model => @Model.ToList()[0].FOption2)
+        </div>
+        <div>
+            @Html.RadioButtonFor(model => @Model.ToList()[0].FChoose, "3") (C) @Html.DisplayFor(model => @Model.ToList()[0].FOption3)
+        </div>
+        <div>
+            @Html.RadioButtonFor(model => @Model.ToList()[0].FChoose, "4") (D) @Html.DisplayFor(model => @Model.ToList()[0].FOption4)
+        </div>
+
+    </div>*@
+
+
+<div class="row">
+    <div class="col">
+        <form asp-action="StartExam">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+
+
+
+            @foreach (var item in Model)
+            {
+                @*<input type="hidden" asp-for="FSujectId" />
+                <input type="hidden" asp-for="FSujectId" />
+                <input type="hidden" asp-for="FSujectId" />*@
+
+                <div>
+                    <div>
+                        Q:@Html.DisplayFor(modelItem => item.FQuestion)
+                    </div>
+                    <br />
+                    <div>
+                        @Html.RadioButtonFor(model => @Model.ToList()[0].FChoose, "1") (A) @Html.DisplayFor(modelItem => item.FOption1)
+                    </div>
+                    <div>
+                        @Html.RadioButtonFor(model => @Model.ToList()[0].FChoose, "2") (B) @Html.DisplayFor(modelItem => item.FOption2)
+                    </div>
+                    <div>
+                        @Html.RadioButtonFor(model => @Model.ToList()[0].FChoose, "3") (C) @Html.DisplayFor(modelItem => item.FOption3)
+                    </div>
+                    <div>
+                        @Html.RadioButtonFor(model => @Model.ToList()[0].FChoose, "4") (D) @Html.DisplayFor(modelItem => item.FOption4)
+                    </div>
+                    <br /><br /><br />
+
+                </div>
+            }
+
+        </form>
+        </div>
+    </div>
+
+
+            @*@foreach (var item in Model)
+            {
+                <div>
+                    <div>
+                        Q:@Html.DisplayFor(modelItem => item.FQuestion)
+                    </div>
+                    <br />
+                    <div>
+                        @Html.RadioButtonFor(model => @Model.ToList()[0].FChoose, "1") (A) @Html.DisplayFor(modelItem => item.FOption1)
+                    </div>
+                    <div>
+                        @Html.RadioButtonFor(model => @Model.ToList()[0].FChoose, "2") (B) @Html.DisplayFor(modelItem => item.FOption2)
+                    </div>
+                    <div>
+                        @Html.RadioButtonFor(model => @Model.ToList()[0].FChoose, "3") (C) @Html.DisplayFor(modelItem => item.FOption3)
+                    </div>
+                    <div>
+                        @Html.RadioButtonFor(model => @Model.ToList()[0].FChoose, "4") (D) @Html.DisplayFor(modelItem => item.FOption4)
+                    </div>
+                    <br /><br /><br />
+
+                </div>
+            }*@
+
+
+            @*<table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.FRecordId)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.FStudentId)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.FExamPaperId)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.FSujectId)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.FDateTime)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.FChoose)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.FEpDetailId)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.FName)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.FTimeLimit)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.FQuestion)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.FOption1)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.FOption2)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.FOption3)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.FOption4)
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.FRecordId)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.FStudentId)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.FExamPaperId)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.FSujectId)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.FDateTime)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.FChoose)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.FEpDetailId)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.FName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.FTimeLimit)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.FQuestion)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.FOption1)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.FOption2)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.FOption3)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.FOption4)
+                                </td>
+                                <td>
+                                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>*@
